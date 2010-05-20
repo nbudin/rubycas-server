@@ -8,6 +8,9 @@
 # go from there.
 
 require 'rubygems'
+require 'bundler'
+Bundler.setup
+
 require 'rack'
 
 $APP_NAME = 'rubycas-server'
