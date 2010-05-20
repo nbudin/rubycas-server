@@ -1,5 +1,39 @@
-require 'config/requirements'
-require 'config/hoe' # setup Hoe + all gem configuration
+require 'rubygems'
+require 'bundler'
+Bundler.setup(:default, :rake)
+
+$:.unshift(File.join(File.dirname(__FILE__), 'lib'))
+require 'rubycas-server/version'
+REV = Time.now.strftime('%Y%m%d%H%M')
+VERS = CASServer::VERSION::STRING + (REV ? ".#{REV}" : "")
+
+begin
+  require 'jeweler'
+  
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.authors = 'Matt Zukowski'
+    gemspec.email = "matt@zukowski.ca"
+    gemspec.description = "Provides single sign-on authentication for web applications using the CAS protocol."
+    gemspec.summary = gemspec.description
+    gemspec.name = 'rubycas-server'
+    gemspec.version = VERS
+    gemspec.homepage = "http://rubycas-server.rubyforge.org"
+    gemspec.rubyforge_project = 'rubycas-server'
+    
+    gemspec.add_dependency "bundler"
+    gemspec.add_dependency "activerecord", "~> 2.3.5"
+    gemspec.add_dependency "activesupport", "~> 2.3.5"
+    gemspec.add_dependency "picnic"
+    gemspec.add_dependency "rack"
+    gemspec.add_dependency "gettext"
+  end
+
+  Jeweler::RubyforgeTasks.new do |rubyforge|
+    rubyforge.doc_task = "rdoc"
+  end
+rescue LoadError
+  puts "Jeweler, or a dependency, not available.  Install it with: gem install jeweler"
+end
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
 

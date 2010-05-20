@@ -6,3 +6,8 @@ gem "picnic"
 gem "rack"
 gem "gettext"
 gem "mysql"
+
+group :rake do
+  gem "rake"
+  gem "jeweler"
+end
